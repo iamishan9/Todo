@@ -7,10 +7,16 @@ class App extends Component {
 
   state = {
     list: [],
-    pendingItem: ""
+    pendingItem: "",
+    displayAll: true,
+    displayComp: false,
+    displayIncomp:false,
+    newList : []
   };
 
   lastItemId = 0;
+
+
 
   newItemId = () => {
     const id = this.lastItemId;
@@ -61,6 +67,40 @@ class App extends Component {
   });
 
 
+  handleTabs = n => {
+    switch (n) {
+      case 1:
+        this.setState({
+          displayAll: true,
+          displayComp: false,
+          displayIncomp: false,
+          newList : this.state.list
+        });
+        break;
+      case 2:
+        this.setState({
+          displayAll: false,
+          displayComp: true,
+          displayIncomp: false,
+          newList : this.state.list.filter(item => item.isDone == true)
+        });
+        break;
+      case '3':
+        this.setState({
+          displayAll: false,
+          displayComp: false,
+          displayIncomp: true,
+          newList : this.state.list.filter(item => item.isDone == false)
+        });
+        break;
+      default:
+        this.setState({
+          renderHome: true
+        });
+    }
+  };
+
+
   editItemAt = (name, id) => {
     this.setState({
       list: this.state.list.map(item => {
@@ -97,9 +137,37 @@ class App extends Component {
       <div className="wrapper">
         <div className="title">My Todo List</div>
         <div className="tabs">
-          <button onClick={()=>{ console.log('hello')}}>All Tasks</button>
-          <button >Completed</button>
-          <button >Remaining</button>
+          <button onClick={() =>  {this.setState({
+            displayAll: true,
+            displayComp: false,
+            displayIncomp: false,
+            newList : []
+            });
+            }
+          }>
+            All Tasks
+        </button>
+        <button onClick={() =>  {this.setState({
+          displayAll: false,
+          displayComp: true,
+          displayIncomp: false,
+          newList : this.state.list.filter(item => item.isDone == true)
+        });
+            }
+          }>
+            Completed
+        </button>
+        <button onClick={() =>  {this.setState({
+          displayAll: false,
+          displayComp: true,
+          displayIncomp: false,
+          newList : this.state.list.filter(item => item.isDone == false)
+        });
+            }
+          }>
+            Remaining
+        </button>
+        
         </div>
         <InputForm
           handleNewItem={this.handleNewItem}
@@ -107,14 +175,24 @@ class App extends Component {
           pendingItem={this.state.pendingItem}
         />
 
-
-        <List
+        {this.state.displayAll && (
+          <List
           list={this.state.list}
           removeItemAt={this.removeItemAt}
           toggleDone={this.toggleDone}
           toggleEditing={this.toggleEditing}
           editItemAt={this.editItemAt}
         />
+        )}
+
+          <List
+          list={this.state.newList}
+          removeItemAt={this.removeItemAt}
+          toggleDone={this.toggleDone}
+          toggleEditing={this.toggleEditing}
+          editItemAt={this.editItemAt}
+        />
+
       </div>
     );
   }

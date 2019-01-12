@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import ItemName from "./ItemName";
-import Button from "./Button";
+import Button from './Button';
+import ItemName from './ItemName';
 
 const ListItem = props => {
   return (

@@ -36,6 +36,8 @@ body {
 }
 
 .tabs button{  
+  margin-left: 10px;
+  margin-bottom:5px;
   background:red;
 }
 
@@ -65,8 +67,10 @@ button {
 }
 
 ul {
+  padding-left: 0;
   list-style: none;
   margin-bottom: 50px;
+  text-align: center;
 }
 
 li {
@@ -75,6 +79,11 @@ li {
   border-top: 1px solid #eee;
   display: flex;
   justify-content: space-between;
+}
+
+li > span{
+  width: 240px;
+  overflow: hidden;
 }
 
 img {

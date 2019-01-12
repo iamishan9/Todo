@@ -1,7 +1,9 @@
-import React, { Component } from "react";
-import List from "./List";
-import InputForm from "./InputForm";
-import "../styles/App.css";
+import React, { Component } from 'react';
+
+import List from './List';
+import '../styles/App.css';
+import InputForm from './InputForm';
+
 
 class App extends Component {
 
@@ -26,7 +28,6 @@ class App extends Component {
 
   
   toggleEditing = id => {
-    // console.log("editing at ", id);
     this.setState({
       list: this.state.list.map(item => {
         if (id === item.id) {
@@ -35,6 +36,7 @@ class App extends Component {
             isEditing: !item["isEditing"]
           };
         }
+
         return item;
       })
     });
@@ -48,9 +50,9 @@ class App extends Component {
           return {
             ...item,
             isDone: !item["isDone"]
-           
-          };
+           };
         }
+
         return item;
       })
     });

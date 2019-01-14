@@ -7,14 +7,22 @@ import InputForm from './InputForm';
 
 class App extends Component {
 
-  state = {
-    list: [],
-    pendingItem: "",
-    displayAll: true,
-    displayComp: false,
-    displayIncomp:false,
-    newList : []
-  };
+  constructor(props) {
+    super(props);
+
+    const storageData = window.localStorage.getItem('todoData');
+    const todos = storageData ? JSON.parse(storageData) : [];
+
+    this.state = {
+      list: todos,
+      pendingItem: "",
+      displayAll: true,
+      displayComp: false,
+      displayIncomp:false
+    };
+  }
+
+
 
   lastItemId = 0;
 
@@ -133,6 +141,11 @@ class App extends Component {
   };
 
   render() {
+
+    window.localStorage.clear();
+    window.localStorage.setItem('todoData', JSON.stringify(this.state.list));
+
+
     return (
       <div className="wrapper">
         <div className="title">My Todo List</div>
@@ -150,8 +163,7 @@ class App extends Component {
         <button onClick={() =>  {this.setState({
           displayAll: false,
           displayComp: true,
-          displayIncomp: false,
-          newList : this.state.list.filter(item => item.isDone == true)
+          displayIncomp: false
         });
             }
           }>
@@ -160,8 +172,7 @@ class App extends Component {
         <button onClick={() =>  {this.setState({
           displayAll: false,
           displayComp: true,
-          displayIncomp: false,
-          newList : this.state.list.filter(item => item.isDone == false)
+          displayIncomp: false
         });
             }
           }>
@@ -185,13 +196,27 @@ class App extends Component {
         />
         )}
 
+        {this.state.displayComp && (
           <List
-          list={this.state.newList}
+          list={this.state.list.filter(item => item.isDone == true)}
           removeItemAt={this.removeItemAt}
           toggleDone={this.toggleDone}
           toggleEditing={this.toggleEditing}
           editItemAt={this.editItemAt}
-        />
+        /> 
+        )}
+
+        {this.state.displayIncomp && (
+          <List
+          list={this.state.list.filter(item => item.isDone == false)}
+          removeItemAt={this.removeItemAt}
+          toggleDone={this.toggleDone}
+          toggleEditing={this.toggleEditing}
+          editItemAt={this.editItemAt}
+        /> 
+        )}
+
+
 
       </div>
     );

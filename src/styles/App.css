@@ -83,7 +83,7 @@ li {
 
 li > span{
   width: 240px;
-  overflow: hidden;
+  word-wrap: break-word;
 }
 
 img {

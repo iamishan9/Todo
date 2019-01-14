@@ -18,8 +18,6 @@ class App extends Component {
 
   lastItemId = 0;
 
-
-
   newItemId = () => {
     const id = this.lastItemId;
     this.lastItemId += 1;

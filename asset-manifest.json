@@ -1,0 +1,14 @@
+{
+  "main.css": "/todo/static/css/main.9994d32a.chunk.css",
+  "main.js": "/todo/static/js/main.56b1052c.chunk.js",
+  "main.js.map": "/todo/static/js/main.56b1052c.chunk.js.map",
+  "static/js/1.29f48eb8.chunk.js": "/todo/static/js/1.29f48eb8.chunk.js",
+  "static/js/1.29f48eb8.chunk.js.map": "/todo/static/js/1.29f48eb8.chunk.js.map",
+  "runtime~main.js": "/todo/static/js/runtime~main.8a695b30.js",
+  "runtime~main.js.map": "/todo/static/js/runtime~main.8a695b30.js.map",
+  "static/media/App.css": "/todo/static/media/bariol_regular-webfont.ceabb18a.woff",
+  "static/css/main.9994d32a.chunk.css.map": "/todo/static/css/main.9994d32a.chunk.css.map",
+  "index.html": "/todo/index.html",
+  "precache-manifest.2da54584cf9f26485765038d835b7ccf.js": "/todo/precache-manifest.2da54584cf9f26485765038d835b7ccf.js",
+  "service-worker.js": "/todo/service-worker.js"
+}

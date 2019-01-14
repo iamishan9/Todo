@@ -171,8 +171,8 @@ class App extends Component {
         </button>
         <button onClick={() =>  {this.setState({
           displayAll: false,
-          displayComp: true,
-          displayIncomp: false
+          displayComp: false,
+          displayIncomp: true
         });
             }
           }>
@@ -198,7 +198,7 @@ class App extends Component {
 
         {this.state.displayComp && (
           <List
-          list={this.state.list.filter(item => item.isDone == true)}
+          list={this.state.list.filter(item => item.isDone)}
           removeItemAt={this.removeItemAt}
           toggleDone={this.toggleDone}
           toggleEditing={this.toggleEditing}
@@ -208,7 +208,7 @@ class App extends Component {
 
         {this.state.displayIncomp && (
           <List
-          list={this.state.list.filter(item => item.isDone == false)}
+          list={this.state.list.filter(item => !item.isDone)}
           removeItemAt={this.removeItemAt}
           toggleDone={this.toggleDone}
           toggleEditing={this.toggleEditing}

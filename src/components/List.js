@@ -14,7 +14,7 @@ const List = props => {
           handleRemove={() => props.removeItemAt(item.id)}
           toggleEditing={() => props.toggleEditing(item.id)}          
           toggleDone={() => props.toggleDone(item.id)}
-          setName={text => props.editItemAt(text, item.id)}
+          setName={text => props.editItem(text, item.id)}
         />
       ))}
     </ul>

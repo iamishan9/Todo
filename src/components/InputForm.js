@@ -2,7 +2,7 @@ import React from 'react';
 
 const InputForm = props => {
   return (
-    <form onSubmit = { props.handleNewItem} className = "todoInput">
+    <form onSubmit = { props.handleNewItemAddition} className = "todoInput">
       <input 
         className="input"
         type="text"

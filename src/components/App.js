@@ -1,34 +1,45 @@
 import React, { Component } from 'react';
 
 import List from './List';
-import '../styles/App.css';
+import Tabs from './Tabs';
+import TABS from '../constant';
 import InputForm from './InputForm';
 
 
 class App extends Component {
 
+  lastItemId = 0;
+
   constructor(props) {
     super(props);
 
-    const storageData = window.localStorage.getItem('todoData');
-    const todos = storageData ? JSON.parse(storageData) : [];
-
     this.state = {
-      list: todos,
-      pendingItem: "",
-      displayAll: true,
-      displayComp: false,
-      displayIncomp:false
+      list: [],
+      pendingItem: '',
+      activeTab: TABS.HOME
     };
   }
 
-
-
-  lastItemId = 0;
+  componentDidUpdate = () => {
+    const arrayList = this.state.list;
+ 
+    localStorage.setItem('list', JSON.stringify(arrayList));
+  };
+ 
+  componentDidMount = () => {
+    const list = JSON.parse(localStorage.getItem('list'));
+ 
+    if (list !== null) {
+      this.setState({
+        list
+      });
+    }
+  };
 
   newItemId = () => {
     const id = this.lastItemId;
     this.lastItemId += 1;
+
     return id;
   };
 
@@ -39,7 +50,7 @@ class App extends Component {
         if (id === item.id) {
           return {
             ...item,
-            isEditing: !item["isEditing"]
+            isEditing: !item.isEditing
           };
         }
 
@@ -55,7 +66,7 @@ class App extends Component {
         if (id === item.id) {
           return {
             ...item,
-            isDone: !item["isDone"]
+            isDone: !item.isDone
            };
         }
 
@@ -89,16 +100,14 @@ class App extends Component {
         this.setState({
           displayAll: false,
           displayComp: true,
-          displayIncomp: false,
-          newList : this.state.list.filter(item => item.isDone == true)
+          displayIncomp: false
         });
         break;
       case '3':
         this.setState({
           displayAll: false,
           displayComp: false,
-          displayIncomp: true,
-          newList : this.state.list.filter(item => item.isDone == false)
+          displayIncomp: true
         });
         break;
       default:
@@ -109,32 +118,59 @@ class App extends Component {
   };
 
 
-  editItemAt = (name, id) => {
+  editItem = (name, id) => {
     this.setState({
       list: this.state.list.map(item => {
         if (id === item.id) {
+
           return {
             ...item,
             name
           };
         }
+
         return item;
       })
     });
   };
 
-  handleNewItem = e => {
+  setCurrentView = view => {
+    this.setState({
+      activeTab: view
+    });
+  };
+
+  getTodoProps = () => {
+    let todoList;
+
+    switch (this.state.activeTab) {
+      case TABS.HOME:
+        todoList = this.state.list;
+        break;
+      case TABS.COMPLETED:
+        todoList = this.state.list.filter(item => item.isDone);
+        break;
+      case TABS.REMAINING:
+        todoList = this.state.list.filter(item => !item.isDone);
+        break;
+      default:
+    }
+    return todoList;
+  }
+
+  handleNewItemAddition = e => {
     e.preventDefault();
     const id = this.newItemId();
     this.setState({
       list: [
+        ...this.state.list,
         {
           name: this.state.pendingItem,
           isEditing: false,
           isDone: false,
           id
-        },
-        ...this.state.list
+        }
+        
       ],
       pendingItem: ""
     });
@@ -142,83 +178,27 @@ class App extends Component {
 
   render() {
 
-    window.localStorage.clear();
-    window.localStorage.setItem('todoData', JSON.stringify(this.state.list));
-
-
     return (
       <div className="wrapper">
         <div className="title">My Todo List</div>
-        <div className="tabs">
-          <button onClick={() =>  {this.setState({
-            displayAll: true,
-            displayComp: false,
-            displayIncomp: false,
-            newList : []
-            });
-            }
-          }>
-            All Tasks
-        </button>
-        <button onClick={() =>  {this.setState({
-          displayAll: false,
-          displayComp: true,
-          displayIncomp: false
-        });
-            }
-          }>
-            Completed
-        </button>
-        <button onClick={() =>  {this.setState({
-          displayAll: false,
-          displayComp: false,
-          displayIncomp: true
-        });
-            }
-          }>
-            Remaining
-        </button>
-        
+          <Tabs 
+            setCurrentView={this.setCurrentView}
+            activeTab={this.state.activeTab}
+          />
+          <InputForm
+            handleNewItemAddition={this.handleNewItemAddition}
+            handleItemInput={this.handleItemInput}
+            pendingItem={this.state.pendingItem}
+          />
+
+          <List
+            list={this.getTodoProps()}
+            removeItemAt={this.removeItemAt}
+            toggleDone={this.toggleDone}
+            toggleEditing={this.toggleEditing}
+            editItem={this.editItem}
+          /> 
         </div>
-        <InputForm
-          handleNewItem={this.handleNewItem}
-          handleItemInput={this.handleItemInput}
-          pendingItem={this.state.pendingItem}
-        />
-
-        {this.state.displayAll && (
-          <List
-          list={this.state.list}
-          removeItemAt={this.removeItemAt}
-          toggleDone={this.toggleDone}
-          toggleEditing={this.toggleEditing}
-          editItemAt={this.editItemAt}
-        />
-        )}
-
-        {this.state.displayComp && (
-          <List
-          list={this.state.list.filter(item => item.isDone)}
-          removeItemAt={this.removeItemAt}
-          toggleDone={this.toggleDone}
-          toggleEditing={this.toggleEditing}
-          editItemAt={this.editItemAt}
-        /> 
-        )}
-
-        {this.state.displayIncomp && (
-          <List
-          list={this.state.list.filter(item => !item.isDone)}
-          removeItemAt={this.removeItemAt}
-          toggleDone={this.toggleDone}
-          toggleEditing={this.toggleEditing}
-          editItemAt={this.editItemAt}
-        /> 
-        )}
-
-
-
-      </div>
     );
   }
 }

@@ -4,19 +4,19 @@ import List from './List';
 import Tabs from './Tabs';
 import TABS from '../constant';
 import InputForm from './InputForm';
+// import Storage from '../utils/Storage.js';
 
 /**
  * This is the main class.
  */
 class App extends Component {
-
   lastItemId = 0;
 
   /**
- * Creates an instance of App.
- *
- * @param {object} props Props from the parent.
- */
+   * Creates an instance of App.
+   *
+   * @param {object} props Props from the parent.
+   */
   constructor(props) {
     super(props);
 
@@ -28,19 +28,29 @@ class App extends Component {
   }
 
   componentDidUpdate = () => {
-    const arrayList = this.state.list;
-
-    localStorage.setItem('list', JSON.stringify(arrayList));
+    this.set();
   };
 
   componentDidMount = () => {
-    const list = JSON.parse(localStorage.getItem('list'));
+    const list = this.get();
 
-    if (list !== null) {
+    if (list) {
       this.setState({
         list
       });
     }
+  };
+
+  get = () => {
+    const list = JSON.parse(localStorage.getItem('list'));
+
+    return list;
+  };
+
+  set = () => {
+    const arrayList = this.state.list;
+
+    localStorage.setItem('list', JSON.stringify(arrayList));
   };
 
   newItemId = () => {
@@ -54,9 +64,9 @@ class App extends Component {
   /**
    *
    *
-   * @param {*} id
+   * @param {number} id
    */
-  toggleEditing = id => {
+  toggleEditMode = id => {
     this.setState({
       list: this.state.list.map(item => {
         if (id === item.id) {
@@ -96,7 +106,7 @@ class App extends Component {
    *
    * @param {*} id
    */
-  removeItemAt = id => {
+  removeItemById = id => {
     this.setState({
       list: this.state.list.filter(item => id !== item.id)
     });
@@ -111,42 +121,6 @@ class App extends Component {
     this.setState({
       pendingItem: e.target.value
     });
-
-  /**
-   *
-   *
-   * @param {*} n
-   */
-  handleTabs = n => {
-    switch (n) {
-      case 1:
-        this.setState({
-          displayAll: true,
-          displayComp: false,
-          displayIncomp: false,
-          newList: this.state.list
-        });
-        break;
-      case 2:
-        this.setState({
-          displayAll: false,
-          displayComp: true,
-          displayIncomp: false
-        });
-        break;
-      case '3':
-        this.setState({
-          displayAll: false,
-          displayComp: false,
-          displayIncomp: true
-        });
-        break;
-      default:
-        this.setState({
-          renderHome: true
-        });
-    }
-  };
 
   /**
    *
@@ -174,7 +148,7 @@ class App extends Component {
    *
    * @param {*} view
    */
-  setCurrentView = view => {
+  setSelectedTab = view => {
     this.setState({
       activeTab: view
     });
@@ -185,24 +159,20 @@ class App extends Component {
    *
    * @returns {Array} Returns the array of list.
    */
-  getTodoProps = () => {
-    let todoList;
-
+  getFilteredTodoList = () => {
     switch (this.state.activeTab) {
       case TABS.HOME:
-        todoList = this.state.list;
-        break;
+        return this.state.list;
+
       case TABS.COMPLETED:
-        todoList = this.state.list.filter(item => item.isDone);
-        break;
+        return this.state.list.filter(item => item.isDone);
+
       case TABS.REMAINING:
-        todoList = this.state.list.filter(item => !item.isDone);
-        break;
+        return this.state.list.filter(item => !item.isDone);
 
       default:
+        return this.state.list;
     }
-
-    return todoList;
   };
 
   /**
@@ -238,7 +208,7 @@ class App extends Component {
     return (
       <div className="wrapper">
         <div className="title">My Todo List</div>
-        <Tabs setCurrentView={this.setCurrentView} activeTab={this.state.activeTab} />
+        <Tabs setSelectedTab={this.setSelectedTab} activeTab={this.state.activeTab} />
         <InputForm
           handleNewItemAddition={this.handleNewItemAddition}
           handleItemInput={this.handleItemInput}
@@ -246,10 +216,10 @@ class App extends Component {
         />
 
         <List
-          list={this.getTodoProps()}
-          removeItemAt={this.removeItemAt}
+          list={this.getFilteredTodoList()}
+          removeItemById={this.removeItemById}
           toggleDone={this.toggleDone}
-          toggleEditing={this.toggleEditing}
+          toggleEditMode={this.toggleEditMode}
           editItem={this.editItem}
         />
       </div>

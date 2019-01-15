@@ -17,7 +17,7 @@ const ListItem = props => {
         isEditing={props.isEditing}
         isDone={props.isDone}
         item={props.item}
-        toggleEditing={props.toggleEditing}
+        toggleEditMode={props.toggleEditMode}
         toggleDone={props.toggleDone}
         handleNameEdits={e => props.setName(e.target.value)}
       >
@@ -26,7 +26,7 @@ const ListItem = props => {
       <Button
         isEditing={props.isEditing}
         isDone={props.isDone}
-        toggleEditing={props.toggleEditing}
+        toggleEditMode={props.toggleEditMode}
         handleRemove={props.handleRemove}
         toggleDone={props.toggleDone}
       />
@@ -37,12 +37,11 @@ const ListItem = props => {
 ListItem.propTypes = {
   item: PropTypes.string.isRequired,
   handleRemove: PropTypes.func.isRequired,
-  toggleEditing: PropTypes.func.isRequired,
+  toggleEditMode: PropTypes.func.isRequired,
   toggleDone: PropTypes.func.isRequired,
   isDone: PropTypes.func.isRequired,
   isEditing: PropTypes.bool.isRequired,
   setName: PropTypes.func.isRequired
 };
-
 
 export default ListItem;

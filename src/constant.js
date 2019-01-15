@@ -1,12 +1,8 @@
 const TABS = {
-  HOME: 'home',
-  COMPLETED: 'completed',
-  REMAINING: 'remaining'
+  HOME: 'h',
+  COMPLETED: 'c',
+  REMAINING: 'r'
 };
 
 export default TABS;
 
-// enum Tabs {
-//   HOME = 1,
-//   COMPLETED= 2
-// }

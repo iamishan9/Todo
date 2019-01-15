@@ -12,14 +12,14 @@ import ListItem from './ListItem';
 const List = props => {
   return (
     <ul>
-      {props.list.map((item) => (
+      {props.list.map(item => (
         <ListItem
           key={item.id}
           item={item.name}
           isEditing={item.isEditing}
           isDone={item.isDone}
-          handleRemove={() => props.removeItemAt(item.id)}
-          toggleEditing={() => props.toggleEditing(item.id)}          
+          handleRemove={() => props.removeItemById(item.id)}
+          toggleEditMode={() => props.toggleEditMode(item.id)}
           toggleDone={() => props.toggleDone(item.id)}
           setName={text => props.editItem(text, item.id)}
         />
@@ -30,8 +30,8 @@ const List = props => {
 
 List.propTypes = {
   list: PropTypes.array.isRequired,
-  removeItemAt: PropTypes.func.isRequired,
-  toggleEditing: PropTypes.func.isRequired,
+  removeItemById: PropTypes.func.isRequired,
+  toggleEditMode: PropTypes.func.isRequired,
   toggleDone: PropTypes.func.isRequired,
   editItem: PropTypes.func.isRequired,
   setName: PropTypes.func.isRequired

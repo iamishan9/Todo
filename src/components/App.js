@@ -5,11 +5,18 @@ import Tabs from './Tabs';
 import TABS from '../constant';
 import InputForm from './InputForm';
 
-
+/**
+ * This is the main class.
+ */
 class App extends Component {
 
   lastItemId = 0;
 
+  /**
+ * Creates an instance of App.
+ *
+ * @param {object} props Props from the parent.
+ */
   constructor(props) {
     super(props);
 
@@ -22,13 +29,13 @@ class App extends Component {
 
   componentDidUpdate = () => {
     const arrayList = this.state.list;
- 
+
     localStorage.setItem('list', JSON.stringify(arrayList));
   };
- 
+
   componentDidMount = () => {
     const list = JSON.parse(localStorage.getItem('list'));
- 
+
     if (list !== null) {
       this.setState({
         list
@@ -38,12 +45,17 @@ class App extends Component {
 
   newItemId = () => {
     const id = this.lastItemId;
+
     this.lastItemId += 1;
 
     return id;
   };
 
-  
+  /**
+   *
+   *
+   * @param {*} id
+   */
   toggleEditing = id => {
     this.setState({
       list: this.state.list.map(item => {
@@ -59,7 +71,11 @@ class App extends Component {
     });
   };
 
-
+  /**
+   *
+   *
+   * @param {*} id
+   */
   toggleDone = id => {
     this.setState({
       list: this.state.list.map(item => {
@@ -67,7 +83,7 @@ class App extends Component {
           return {
             ...item,
             isDone: !item.isDone
-           };
+          };
         }
 
         return item;
@@ -75,17 +91,32 @@ class App extends Component {
     });
   };
 
+  /**
+   *
+   *
+   * @param {*} id
+   */
   removeItemAt = id => {
-    this.setState({ 
-      list: this.state.list.filter(item => id !== item.id) 
+    this.setState({
+      list: this.state.list.filter(item => id !== item.id)
     });
   };
 
-  handleItemInput = e => this.setState({ 
-    pendingItem: e.target.value 
-  });
+  /**
+   *
+   *
+   * @param {*} e
+   */
+  handleItemInput = e =>
+    this.setState({
+      pendingItem: e.target.value
+    });
 
-
+  /**
+   *
+   *
+   * @param {*} n
+   */
   handleTabs = n => {
     switch (n) {
       case 1:
@@ -93,7 +124,7 @@ class App extends Component {
           displayAll: true,
           displayComp: false,
           displayIncomp: false,
-          newList : this.state.list
+          newList: this.state.list
         });
         break;
       case 2:
@@ -117,12 +148,16 @@ class App extends Component {
     }
   };
 
-
+  /**
+   *
+   *
+   * @param {*} name
+   * @param {*} id
+   */
   editItem = (name, id) => {
     this.setState({
       list: this.state.list.map(item => {
         if (id === item.id) {
-
           return {
             ...item,
             name
@@ -134,12 +169,22 @@ class App extends Component {
     });
   };
 
+  /**
+   *
+   *
+   * @param {*} view
+   */
   setCurrentView = view => {
     this.setState({
       activeTab: view
     });
   };
 
+  /**
+   *
+   *
+   * @returns {Array} Returns the array of list.
+   */
   getTodoProps = () => {
     let todoList;
 
@@ -153,14 +198,22 @@ class App extends Component {
       case TABS.REMAINING:
         todoList = this.state.list.filter(item => !item.isDone);
         break;
+
       default:
     }
-    return todoList;
-  }
 
+    return todoList;
+  };
+
+  /**
+   *
+   *
+   * @param {*} e
+   */
   handleNewItemAddition = e => {
     e.preventDefault();
     const id = this.newItemId();
+
     this.setState({
       list: [
         ...this.state.list,
@@ -170,40 +223,38 @@ class App extends Component {
           isDone: false,
           id
         }
-        
       ],
-      pendingItem: ""
+      pendingItem: ''
     });
   };
 
+  /**
+   *
+   *
+   * @returns
+   * @memberof App
+   */
   render() {
-
     return (
       <div className="wrapper">
         <div className="title">My Todo List</div>
-          <Tabs 
-            setCurrentView={this.setCurrentView}
-            activeTab={this.state.activeTab}
-          />
-          <InputForm
-            handleNewItemAddition={this.handleNewItemAddition}
-            handleItemInput={this.handleItemInput}
-            pendingItem={this.state.pendingItem}
-          />
+        <Tabs setCurrentView={this.setCurrentView} activeTab={this.state.activeTab} />
+        <InputForm
+          handleNewItemAddition={this.handleNewItemAddition}
+          handleItemInput={this.handleItemInput}
+          pendingItem={this.state.pendingItem}
+        />
 
-          <List
-            list={this.getTodoProps()}
-            removeItemAt={this.removeItemAt}
-            toggleDone={this.toggleDone}
-            toggleEditing={this.toggleEditing}
-            editItem={this.editItem}
-          /> 
-        </div>
+        <List
+          list={this.getTodoProps()}
+          removeItemAt={this.removeItemAt}
+          toggleDone={this.toggleDone}
+          toggleEditing={this.toggleEditing}
+          editItem={this.editItem}
+        />
+      </div>
     );
   }
 }
 
 export default App;
-
-
-

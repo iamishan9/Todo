@@ -5,3 +5,8 @@ const TABS = {
 };
 
 export default TABS;
+
+// enum Tabs {
+//   HOME = 1,
+//   COMPLETED= 2
+// }

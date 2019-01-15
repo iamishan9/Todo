@@ -1,8 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Button from './Button';
 import ItemName from './ItemName';
 
+/**
+ *
+ *
+ * @param {*} props
+ * @returns
+ */
 const ListItem = props => {
   return (
     <li>
@@ -26,5 +33,16 @@ const ListItem = props => {
     </li>
   );
 };
+
+ListItem.propTypes = {
+  item: PropTypes.string.isRequired,
+  handleRemove: PropTypes.func.isRequired,
+  toggleEditing: PropTypes.func.isRequired,
+  toggleDone: PropTypes.func.isRequired,
+  isDone: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  setName: PropTypes.func.isRequired
+};
+
 
 export default ListItem;

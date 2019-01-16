@@ -4,7 +4,7 @@ import List from './List';
 import Tabs from './Tabs';
 import TABS from '../constant';
 import InputForm from './InputForm';
-import { get, set } from '../utils/Storage.js';
+import * as storageUtil from '../utils/Storage.js';
 
 /**
  * This is the main class.
@@ -22,17 +22,16 @@ class App extends Component {
 
     this.state = {
       list: [],
-      pendingItem: '',
       activeTab: TABS.HOME
     };
   }
 
   componentDidUpdate = () => {
-    set(this.state.list);
+    storageUtil.set(this.state.list);
   };
 
   componentDidMount = () => {
-    const list = get();
+    const list = storageUtil.get();
 
     if (list && list.length) {
       this.setState({
@@ -103,16 +102,6 @@ class App extends Component {
   /**
    *
    *
-   * @param {*} e
-   */
-  handleItemInput = e =>
-    this.setState({
-      pendingItem: e.target.value
-    });
-
-  /**
-   *
-   *
    * @param {*} name
    * @param {*} id
    */
@@ -164,47 +153,30 @@ class App extends Component {
   };
 
   /**
+   * Add new todo to the start of array.
    *
-   *
-   * @param {*} e
-   * 
+   * @param {object} receivedItem Todo item from the TodoForm.
    */
-  handleNewItemAddition = e => {
-    e.preventDefault();
+  updateTodoList = receivedItem => {
     const id = this.newItemId();
 
-    if (this.isItemValid(this.state.pendingItem)) {
-      this.setState({
-        list: [
-          ...this.state.list,
-          {
-            name: this.state.pendingItem,
-            isEditing: false,
-            isDone: false,
-            id
-          }
-        ],
-        pendingItem: ''
-      });
-    }
+    this.setState({
+      list: [
+        ...this.state.list,
+        {
+          name: receivedItem,
+          isEditing: false,
+          isDone: false,
+          id
+        }
+      ]
+    });
   };
 
-  /**
-   *
-   *
-   * @param {*} item
-   * 
-   */
-  isItemValid = item => {
-    if (item && item !== null && [...item].some(letter => letter !== ' ')) {
-      return true;
-    }
-  };
   /**
    *
    *
    * @returns
-   * @memberof App
    */
   render() {
     return (
@@ -212,9 +184,9 @@ class App extends Component {
         <div className="title">My Todo List</div>
         <Tabs setSelectedTab={this.setSelectedTab} activeTab={this.state.activeTab} />
         <InputForm
-          handleNewItemAddition={this.handleNewItemAddition}
-          handleItemInput={this.handleItemInput}
-          pendingItem={this.state.pendingItem}
+          updateTodo={this.updateTodoList}
+          // handleItemInput={this.handleItemInput}
+          // pendingItem={this.state.pendingItem}
         />
 
         <List

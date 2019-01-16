@@ -4,7 +4,7 @@ import List from './List';
 import Tabs from './Tabs';
 import TABS from '../constant';
 import InputForm from './InputForm';
-// import Storage from '../utils/Storage.js';
+import { get, set } from '../utils/Storage.js';
 
 /**
  * This is the main class.
@@ -28,29 +28,17 @@ class App extends Component {
   }
 
   componentDidUpdate = () => {
-    this.set();
+    set(this.state.list);
   };
 
   componentDidMount = () => {
-    const list = this.get();
+    const list = get();
 
-    if (list) {
+    if (list && list.length) {
       this.setState({
         list
       });
     }
-  };
-
-  get = () => {
-    const list = JSON.parse(localStorage.getItem('list'));
-
-    return list;
-  };
-
-  set = () => {
-    const arrayList = this.state.list;
-
-    localStorage.setItem('list', JSON.stringify(arrayList));
   };
 
   newItemId = () => {

@@ -13,7 +13,7 @@ const Tabs = props => {
 
   return (
     <div className="tabs">
-      <button onClick={() => setSelectedTab(TABS.HOME)}>Home</button>
+      <button onClick={() => setSelectedTab(TABS.HOME)}>All</button>
       <button onClick={() => setSelectedTab(TABS.COMPLETED)}>Completed</button>
       <button onClick={() => setSelectedTab(TABS.REMAINING)}>Remaining</button>
     </div>

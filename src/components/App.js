@@ -167,25 +167,39 @@ class App extends Component {
    *
    *
    * @param {*} e
+   * 
    */
   handleNewItemAddition = e => {
     e.preventDefault();
     const id = this.newItemId();
 
-    this.setState({
-      list: [
-        ...this.state.list,
-        {
-          name: this.state.pendingItem,
-          isEditing: false,
-          isDone: false,
-          id
-        }
-      ],
-      pendingItem: ''
-    });
+    if (this.isItemValid(this.state.pendingItem)) {
+      this.setState({
+        list: [
+          ...this.state.list,
+          {
+            name: this.state.pendingItem,
+            isEditing: false,
+            isDone: false,
+            id
+          }
+        ],
+        pendingItem: ''
+      });
+    }
   };
 
+  /**
+   *
+   *
+   * @param {*} item
+   * 
+   */
+  isItemValid = item => {
+    if (item && item !== null && [...item].some(letter => letter !== ' ')) {
+      return true;
+    }
+  };
   /**
    *
    *

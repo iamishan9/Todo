@@ -1,14 +1,14 @@
 {
-  "main.css": "/Todo/static/css/main.69a482b8.chunk.css",
-  "main.js": "/Todo/static/js/main.5fee1894.chunk.js",
-  "main.js.map": "/Todo/static/js/main.5fee1894.chunk.js.map",
-  "static/js/1.29f48eb8.chunk.js": "/Todo/static/js/1.29f48eb8.chunk.js",
-  "static/js/1.29f48eb8.chunk.js.map": "/Todo/static/js/1.29f48eb8.chunk.js.map",
+  "main.css": "/Todo/static/css/main.2b62a7b8.chunk.css",
+  "main.js": "/Todo/static/js/main.9ff90386.chunk.js",
+  "main.js.map": "/Todo/static/js/main.9ff90386.chunk.js.map",
+  "static/js/1.92f0de8b.chunk.js": "/Todo/static/js/1.92f0de8b.chunk.js",
+  "static/js/1.92f0de8b.chunk.js.map": "/Todo/static/js/1.92f0de8b.chunk.js.map",
   "runtime~main.js": "/Todo/static/js/runtime~main.79583ee1.js",
   "runtime~main.js.map": "/Todo/static/js/runtime~main.79583ee1.js.map",
   "static/media/App.css": "/Todo/static/media/bariol_regular-webfont.ceabb18a.woff",
-  "static/css/main.69a482b8.chunk.css.map": "/Todo/static/css/main.69a482b8.chunk.css.map",
+  "static/css/main.2b62a7b8.chunk.css.map": "/Todo/static/css/main.2b62a7b8.chunk.css.map",
   "index.html": "/Todo/index.html",
-  "precache-manifest.0e939b9d304590a5484e86c6b715cd1a.js": "/Todo/precache-manifest.0e939b9d304590a5484e86c6b715cd1a.js",
+  "precache-manifest.5176d33e4814658db3862487e5002d2c.js": "/Todo/precache-manifest.5176d33e4814658db3862487e5002d2c.js",
   "service-worker.js": "/Todo/service-worker.js"
 }

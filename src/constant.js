@@ -5,4 +5,3 @@ const TABS = {
 };
 
 export default TABS;
-
